@@ -6,7 +6,6 @@ so3.py -- the Special Orthogonal group (Lie group, also algebraic).
     Has a double covering by S^3 = {q = (a,b,c,d) in R^4 | a^2+b^2+c^2+d^2 = 1} 
     exponential map goes from Lie algebra so(3) -> Lie group SO(3)
     so(n) is the tangent space at identity (nxn skew-matrices)
-
 """
 
 import numpy as np
@@ -20,7 +19,7 @@ _EPS = 1e-10  # used to avoid errors when computing with small angle thetas
 def hat(w : np.ndarray) -> np.ndarray:
     # 3-vector => 3x3 symmetric-skew matrix
     w = np.asarray(w, dtype = float).reshape(3)
-    return np.array([[0,0, -w[2], w[1]],
+    return np.array([[0.0, -w[2], w[1]],
                     [w[2], 0.0, -w[0]],
                     [-w[1], w[0], 0.0]])
 
