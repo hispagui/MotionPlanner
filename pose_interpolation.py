@@ -17,9 +17,8 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 from mpl_toolkits.mplot3d import Axes3D      # noqa: F401  (registers 3d proj)
 
 
-# --------------------------------------------------------------------------
 # definition of poses, measurments and precomputations
-# --------------------------------------------------------------------------
+
 T0 = se3.make(np.eye(3), [0.0, 0.0, 0.0]) # first pose (identity)
 T1 = se3.make(so3.exp(np.array([0.3, 1.0, 0.5]) / np.linalg.norm([0.3, 1.0, 0.5]) * 2.4), [3.0, 1.5, 2.0]) # kind of a random pose
 # check geod.distance between bodies and position of body at half time 0.5
@@ -34,6 +33,9 @@ decpl = [se3.decoupled_interpolate(T0, T1, t) for t in ts]
 screw_pos = np.array([se3.split(T)[1] for T in screw])  
 decpl_pos = np.array([se3.split(T)[1] for T in decpl])    
 
+
+
+# below is all the plotting
 # set up the 3D space
 fig = plt.figure(figsize=(7, 6))
 ax = fig.add_subplot(111, projection="3d")
@@ -55,7 +57,7 @@ def draw_triad(style, alpha):
 screw_triad = draw_triad("-", 1.0)     # solid  = screw motion
 decpl_triad = draw_triad("--", 0.65)   # dashed = decoupled motion
 
-# Faint full reference paths (so the arc vs chord shapes read even at rest).
+# faint full reference paths (so the arc vs chord shapes read even at rest)
 ax.plot(screw_pos[:, 0], screw_pos[:, 1], screw_pos[:, 2],
         color="#D85A30", lw=1, alpha=0.25)
 ax.plot(decpl_pos[:, 0], decpl_pos[:, 1], decpl_pos[:, 2],
@@ -65,7 +67,7 @@ ax.plot(decpl_pos[:, 0], decpl_pos[:, 1], decpl_pos[:, 2],
 screw_trail, = ax.plot([], [], [], color="#D85A30", lw=2.5, label = "screw (geodesic)")
 decpl_trail, = ax.plot([], [], [], color="#1D9E75", lw=2.5, ls="--", label = "decoupled (slerp)")
 
-# Endpoint markers.
+# endpoint markers
 ax.scatter(*screw_pos[0], color="k", s=40)
 ax.scatter(*screw_pos[-1], color="k", s=40)
 ax.text(*screw_pos[0], "  T0", fontsize=11)
