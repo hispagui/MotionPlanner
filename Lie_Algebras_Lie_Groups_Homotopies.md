@@ -1,5 +1,4 @@
 # The theory
-layout :
 
 Lie Groups and Differential Geomtry
 
@@ -12,8 +11,7 @@ Homotopy
 
 ## Lie Groups and Differential Geometry
 __Definition__ :
-A group is a set $G$ together with a binary operation on ⁠$G$⁠, here denoted "$\cdot$", that combines any two elements $a$ and $b$ of $G$ to form an element of $G$ denoted $a \cdot b$⁠, such that the following three requirements, known as group axioms, are satisfied:
-
+A group is a set $G$ together with a binary operation on ⁠$G$⁠, here denoted "$\cdot$", that combines any two elements $a$ and $b$ of $G$ to form an element of $G$ denoted $a \cdot b$⁠, such that the following three requirements, known as group axioms, are satisfied: <br>
 Associativity : $\forall a,b \in G, (a\cdot b) \cdot c = a \cdot (b\cdot c)$
 
 An identity element : $\exists ! e \in G, \forall a \in G, e \cdot a = a$ and $a\cdot e = a$ called the _identity element_
