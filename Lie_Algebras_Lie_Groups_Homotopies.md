@@ -27,8 +27,9 @@ Smooth : $\varphi \in C^{\infty}$
 A _tangent vector_ at a point $p$ in a manifold $M$ is a _derivation_ at $p$.
 The tangent vectors at $p$ form a vector space $T_pM$ called the _tangent space_ of $M$ at $p$.
 
-### Definition :
+__Definition__ :
 A _Lie group_ is a subset $G$ of $\mathbb{R}^n$ such that $G$ is a group and a manifold in $\mathbb{R}^n$ and both the group operation $\cdot : G\rightarrow G$ and the inverse operation $.^{-1}: G\rightarrow G$ are smooth functions.
 
-### Definition :
-A _Lie algebra_ is an algebra $A$ togther with a _Lie bracket_ operator $\[.\textit{ },.\] : A \times A \rightarrow A$
+
+__Definition__ :
+A _Lie algebra_ is an algebra $A$ togther with a _Lie bracket_ operator $\[.,.\] : A \times A \rightarrow A$
