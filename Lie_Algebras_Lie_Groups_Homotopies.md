@@ -10,29 +10,6 @@ Homotopy
 
 
 ## Lie Groups and Differential Geometry
-__Definition__ :
-A group is a set $G$ together with a binary operation on ⁠$G$⁠, here denoted "$\cdot$", that combines any two elements $a$ and $b$ of $G$ to form an element of $G$ denoted $a \cdot b$⁠, such that the following three requirements, known as group axioms, are satisfied: <br>
-Associativity : $\forall a,b \in G, (a\cdot b) \cdot c = a \cdot (b\cdot c)$
-
-An identity element : $\exists ! e \in G, \forall a \in G, e \cdot a = a$ and $a\cdot e = a$ called the _identity element_
-
-Inverse elements : $\forall a\in G, \exists ! b \in G, a\cdot b = e$ and $b \cdot a = e$. Such a $b$ is called the _inverse_ of $a$.
-
-__Definition__ :
-An $n$-dimensional _manifold_ $M$ is a topological (usually Hausdorff and second countable), _locally Euclidean space_. A topological space $M$ is said to be locally Euclidean of dimension $n$ if every point $p\in M$ has a neighborhood $U$ such that there is a homeomorphisms $\phi : U \rightarrow V$ for $V\subset \mathbb{R}^n$ an open subset.
-
-__Definition__ : 
-An $m$-dimensional manifold is a _smooth manifold_ embedded in $\mathbb{R}^n$ (provided $n \ge m$) if every point $p\in M$ is contained by $U\subseteq M$, defined by some function $\varphi : \mathbb{R}^n \rightarrow M, V \mapsto U$, where $V$ is an open subset of $\mathbb{R}^n$ which contains the origin. Additionally, $\varphi$ must be : 
-
-A homeomorphism : $\varphi$ and $\varphi^{-1}$ are continuous.
-
-Smooth : $\varphi \in C^{\infty}$
-
-...
-
-
-
-
 
 __Definition__ :
 A _tangent vector_ at a point $p$ in a manifold $M$ is a _derivation_ at $p$.
@@ -41,12 +18,14 @@ The tangent vectors at $p$ form a vector space $T_pM$ called the _tangent space_
 __Definition__ :
 A _Lie group_ is a subset $G$ of $\mathbb{R}^n$ such that $G$ is a group and a manifold in $\mathbb{R}^n$ and both the group operation $\cdot : G\rightarrow G$ and the inverse operation $.^{-1}: G\rightarrow G$ are smooth functions.
 
-__Definition__ : _Lie bracket_
-
 __Definition__ :
 A _Lie algebra_ is an algebra $A$ togther with a _Lie bracket_ operator $\[.,.\] : A \times A \rightarrow A$.
 An important fact is that the Lie algebra $A$ associated to a Lie group $M$ happens to be the tangent space
 at the identity element $1$, that is: $A = T_1M$.
+
+__Definition__ : _Lie bracket_
+
+
 
 ## SO(3) and SE(3) are Lie groups
 
@@ -57,7 +36,7 @@ Let $M$ be an $n$-dimensional manifold.
 A _Riemannian metric_ on $M$ is a smoothly varying positive-definite inner-product $g_p$ on each tangent space $T_pM$.
 We say that the pair $(M,g)$ is a _Riemannian manifold_.
 
-We now defin what is the analogue of "straight lines" in a Riemannian manifold $(M,g)$ :
+We now define what is the analogue of "straight lines" in a Riemannian manifold $(M,g)$ :
 
 __Definition__ : 
 Let $\gamma : I \rightarrow M$ be a regular path.
@@ -72,5 +51,24 @@ Let $p\in M$ and $v\in T_pM$. We write $\gamma_v:I\rightarrow M$ for the (maxima
 The _exponential map_ at $p$, written $exp_p:U_p\rightarrow M$, is defined by $exp_p(v) = \gamma_v(1)$.
 
 __Remark__ : 
-In the context of Lie groups, the exponential map is actually maps elements from the Lie algebra (tangent space) to the corresponding Lie group (manifold).
-There is an "inverse" computation that we call the logarithm map which sends an element from the Lie group (manifold) to the Lie algebra (tangent space).
+In the context of Lie groups, the exponential map from the Lie algebra (tangent space) to the corresponding Lie group (manifold).
+There is an "inverse" computation that we call the _logarithm map_ which sends an element from the Lie group (manifold) to the Lie algebra (tangent space).
+
+
+## Homotopy and Homology theory
+
+__Definition__ : A _homotopy_ between two continuous functions $f$ and $g$ from $X$ to $Y$ is a continuous function $H : X \times [0,1]  \rightarrow Y$ such that $H(x,0) = f(x)$ and $H(x,1) = g(x)$ for all $x\in X$.
+
+__Definition__ : Two paths $\gamma_1$ and $\gamma_2$ are said to be _homotopic_ if there exists a homotopy taking $\gamma_1$ to $\gamma_2$.
+
+__Definition__ : The _fundamental group_ of a pointed topological space $(X,x)$ denoted $\pi_1(X,x)$ is the group of equivalence classes under homotopy of the loops based at $x$ in $X$.
+
+__Example__ : The fundamental group of $\mathbb{R}^2$ is trivial, $\pi_1(\mathbb{R}^2 - \{p\}) = \mathbb{Z}$ and $\pi_1(\mathbb{R}^2 - \{p_1, p_2, ..., p_n\}) = F_n$ the free group on $n$ generators.
+
+
+__Definition__ : Let $X$ be a topological space, _chain complexe_ $(C_*, d_*)$ with $d_n : C_n \rightarrow C_{n-1}, each $C_n$ is an abelian group and $d_{n-1} \circ d_n = 0 \forall n$.
+$B_n := \im d_{n+1} and $Z_n := \ker d_n$. 
+Finally $H_n(X) := Z_n /B_n ...
+
+
+__Theorem (Hurewicz)__ : For $X$ connected, there exists a homomorphism $h : \pi_1(X) \rightarrow H_1(X)$ which is surjective and $\ker h = [\pi_1(X), \pi_1(X)]$ the commutator subgroup. This implies that the abelianisation of the first fundamental group is isomorphic to the first homology group, $\pi_1(X)^{ab} \cong H_1(X)$.

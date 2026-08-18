@@ -1,5 +1,5 @@
 """
-so3.py -- the Special Orthogonal group (Lie group, also algebraic).
+so3.py : the Special Orthogonal group (Lie group, also algebraic).
     SO(3) = {M in R^3 x R^3 | MM^t = id, det(M) = 1}
     Used for rotations 
     Heavy use of numpy

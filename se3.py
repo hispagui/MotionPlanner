@@ -1,5 +1,5 @@
 """
-se3.py -- the Special Euclidean group (Lie group, also algebraic).
+se3.py : the Special Euclidean group (Lie group, also algebraic).
     SE(3) = {[[R,t],[0,1]] in R^4 x R^4 | R in SO(3), p in R^3}.
     Topologically homeomorphic to SO(3)xR^3 which is homeomorphic to a 6d manifold. 
     As Lie groups, isomorphic to SO(3) semidirprod R^3 (the group of translations).
