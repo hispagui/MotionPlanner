@@ -2,7 +2,6 @@
 so3.py : the Special Orthogonal group (Lie group, also algebraic).
     SO(3) = {M in R^3 x R^3 | MM^t = id, det(M) = 1}
     Used for rotations 
-    Heavy use of numpy
     Has a double covering by S^3 = {q = (a,b,c,d) in R^4 | a^2+b^2+c^2+d^2 = 1} 
     exponential map goes from Lie algebra so(3) -> Lie group SO(3)
     so(n) is the tangent space at identity (nxn skew-matrices)
@@ -32,7 +31,7 @@ def vee(W : np.ndarray) -> np.ndarray:
 # mapping between Lie algebra so(3) and Lie group SO(3) (exp and log maps)
 # ---------------------------------------------------------------
 def exp(w : np.ndarray) -> np.ndarray:
-    # rotation vector -> rotation matrix
+    # rotation vector so(3) -> rotation matrix SO(3)
     # e^w = I + w + w^2/2! + w^3/3! + ...
     # recall w represents a rotation, w = theta * u for u a unit vector
     # => Rodrigues' rotation formula : I + sin(theta)u + (1-cos(theta))u^2    
@@ -49,7 +48,7 @@ def exp(w : np.ndarray) -> np.ndarray:
     return np.eye(3) + A*K + B*(K@K)
 
 def log(R : np.ndarray) -> np.ndarray:
-    # rotation matrix -> rotation vector (inverse of exp map)
+    # rotation matrix SO(3) -> rotation vector so(3) (inverse of exp map)
     # log R = (R-I) - (R-I)^2/2 + (R-I)^3/3 - ...
     # Rodrigues' rotation formula : log R = theta (R - R^T) / 2 sin(theta)
     # with theta = cos^-1( (tr(R)-1)/2 ) 
@@ -110,7 +109,7 @@ def quat_to_matrix(q: np.ndarray) -> np.ndarray:
 
 def matrix_to_quat(R: np.ndarray) -> np.ndarray:
     # rotation matrix -> unit quaternion q (Shepperd's method; returns w >= 0)
-    # since double covering, it only returns +q, the othr solution is -q
+    # since double covering, it only returns +q since -q is the other point above (in the double covering)
     R = np.asarray(R, dtype=float)
     tr = np.trace(R)
     if tr > 0:
@@ -143,7 +142,7 @@ def matrix_to_quat(R: np.ndarray) -> np.ndarray:
     return q / np.linalg.norm(q)
 
 def quat_mul(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    # Hamilton product of two quaternions (composition of rotations)
+    # Hamilton product of two quaternions (this is composition of rotations)
     w0, x0, y0, z0 = a
     w1, x1, y1, z1 = b
     return np.array([

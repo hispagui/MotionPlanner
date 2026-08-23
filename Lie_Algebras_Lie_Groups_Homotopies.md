@@ -29,6 +29,17 @@ __Definition__ : _Lie bracket_
 
 ## SO(3) and SE(3) are Lie groups
 
+__Representations of coordinates (in SO(3))__ :
+\begin{itemize}
+    \item[-] with 3 angles (_Euler angles_) $\alpha$, $\beta$ and $\gamma$ $\in \[ -\pi, \pi )$, rotation matrices can be composed : $R(\alpha, \beta, \gamma) = R_3(\gamma)R_2(\beta)R_1(\alpha) := f(r)$ 
+    where $r = [\alpha, \beta, \gamma]$
+    \item[-] by _exponential representation_ let $\omega \in \mathbb{R}^3$ be a vector, a rotation in 3D can be expressed by a rotation axis $\omega$ and a rotation angle about that axis $||\omega||$.
+    The matrix exponential of $\omega$ yields the $3\times 3$ skew-symmetric matrix in $SO(3)$.
+    \item _axis_, let $q = (\omega, \alpha)\in \mathbb{R}^4$ with $||\omega|| = 1$, its basically the same idea as above, a rotation of angle of $\alpha$ arround the $\omega$-axis.
+    And Rodrigues' rotation formula maps rotation vector to rotation matrix in $SO(3)$
+    \item[-] _quaternions_, let $q = (w,x,y,z)\in S^3$ (so with $||q||=1$), we set $w = \cos\frac{\theta}{2}$ and $(x,y,z) = \alpha \sin\frac{\theta}{2}$, then as above, we have a rotation of angle $\theta$ arround the axis $\alpha$.
+\end{itemize}
+
 
 ## Riemannian Geometry
 __Definition__ : 

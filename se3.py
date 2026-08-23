@@ -19,7 +19,7 @@ def make(R : np.ndarray, p : np.ndarray) -> np.ndarray:
     T[:3, 3] = np.asarray(p, dtype=float).reshape(3)
     return T
 
-def split(T : np.ndarray) -> tuple:
+def split(T : np.ndarray) -> np.ndarray:
     # returns (R,p) from an element of SE(3)
     T = np.asarray(T, dtype=float)
     return (T[:3,:3].copy(), T[:3,3].copy())
@@ -28,6 +28,7 @@ def inverse(T : np.ndarray) -> np.ndarray:
     # returns elements [[R^T, -R^Tp],[0, 0, 0, 1]]
     R, p = split(T)
     return make(R.T, -R.T @ p)
+
 
 # ---------------------------------------------------------------
 # mappings between Lie algebra se(3) and Lie group SE(3) (exp and log maps)
