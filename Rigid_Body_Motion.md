@@ -39,12 +39,22 @@ Idea : One can combine consecutive transformations, $T_{01} T_{12} T_{23} = T_{0
 There exist two formulations of this formula; in the base frame and in the end-effector frame.
 
 In the base frame, we call this equation the _space form_ :
-$\cdot$ Suppose joint $n$ is displaced by to some joint value $\theta_n$. The end-effector frame $M$ then undergoes a displacement of the form $T = e^{[\mathcal{S}_n]\theta_n}M$, where $T \in SE(3)$ is the new configuration of the end-effector frame.
 
-$\cdot$ If we assume that the joint $n-1$ is also allowed to move, then the end-effector undergoes a displacement of the form $T = e^{[\mathcal{S}_{n-1}]\theta_{n-1}}(e^{[\mathcal{S}_n]\theta_n}M)$ 
+$\cdot$ Suppose joint $n$ is displaced by to some joint value $\theta_n$. The end-effector frame $M$ then undergoes a displacement of the form 
+```math 
+T = e^{[\mathcal{S}_n]\theta_n}M$, where $T \in SE(3)
+``` 
+is the new configuration of the end-effector frame.
+
+$\cdot$ If we assume that the joint $n-1$ is also allowed to move, then the end-effector undergoes a displacement of the form 
+```math
+T = e^{[\mathcal{S}_{n-1}]\theta_{n-1}}(e^{[\mathcal{S}_n]\theta_n}M)
+```
 
 $\cdot$ Continuing this reasonning and allowing all joints to move, it follows that 
-$ T(\theta) =  e^{[\mathcal{S}_{1}]\theta_{1}} ... e^{[\mathcal{S}_{n-1}]\theta_{n-1}} e^{[\mathcal{S}_n]\theta_n}M.$
+```math
+T(\theta) =  e^{[\mathcal{S}_{1}]\theta_{1}} ... e^{[\mathcal{S}_{n-1}]\theta_{n-1}} e^{[\mathcal{S}_n]\theta_n}M.
+```
 
 
 In the end-effector frame, this representation is called the _body form_:
@@ -60,7 +70,11 @@ T(\theta)
 \end{aligned}
 ```
 
-where each $[\mathcal{B}_i] = [Ad_{M^{-1}}]\mathcal{S}_i$ represents the joint axes as screws axes in the end-effector frame.
+where each 
+```math 
+[\mathcal{B}_i] = [Ad_{M^{-1}}]\mathcal{S}_i
+``` 
+represents the joint axes as screws axes in the end-effector frame.
 
 
 
