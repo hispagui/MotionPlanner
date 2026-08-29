@@ -8,20 +8,20 @@ __Notations :__ Suppose we have a robot consisting of $n$ links. \\
 $\cdot$ The link reference frames are respectively labeled $\{1\}, \{2\}, ..., \{n\}$, with $\{0\} = \{b\}$ being the base frame and $\{e\}$ being the end-effector's frame attached to the last link. The link lengths are denoted by $L_1, L_2, ..., L_n$, and the joint angles are given by $\theta_1, \theta_2, ..., \theta_n$.
 
 $\cdot$ The matrices $T_{bm} \in SE(3)$ denotes the configuration of the (body) frame $\{m\}$ as seen from the base frame $\{b\}. 
-The pose $T$ (often $T = T_{0n}$) of the end-effector frame is a function of all of $L_i$ and $\theta_i$ for $i \in \[1,n\]$. 
+The pose $T$ (often $T = T_{0n}$) of the end-effector frame is a function of all of $L_i$ and $\theta_i$ for $i \in [1,n]$. 
 We denote $M\in SE(3)$ the configuration of the end-effector relative to the base frame when the robot is in its zero position (all the joint angles have value zero).
 
 $\cdot$ Links are often described as _screws_ and denoted $\mathcal{S} = \{\omega, v\} \in \mathbb{R}^6$ with $\omega$ a position and $v$ a unit vector in direction of the axis.
 
-$\cdot$ We will denote the _skew-symmetric matrix_ associated with $\omega\in\mathbb{R}^3$ and $\mathcal{S}$ respectively by $\[w\]$ and $\[\mathcal{S}\]$.
+$\cdot$ We will denote the _skew-symmetric matrix_ associated with $\omega\in\mathbb{R}^3$ and $\mathcal{S}$ respectively by $[w]$ and $[\mathcal{S}]$.
 
 
 
 In the following we will use the exponential coordinate representation : \\
-$exp :  \[\mathcal{S}\]\theta \longrightarrow T \in SE(3)$\\
-$log : T \longrightarrow \[\mathcal{S}\]\theta \in se(3).$\\
+$exp :  [\mathcal{S}]\theta \longrightarrow T \in SE(3)$\\
+$log : T \longrightarrow [\mathcal{S}]\theta \in se(3).$\\
 
-And we have $exp(\[\mathcal{S}\]\theta) = e^{\[\mathcal{S}\]\theta} = I + \[\mathcal{S}\]\theta + \[\mathcal{S}\]^2\frac{\theta^2}{2!} + \[\mathcal{S}\]\frac{\theta^3}{3!} + ...$
+And we have $exp([\mathcal{S}]\theta) = e^{[\mathcal{S}]\theta} = I + [\mathcal{S}]\theta + [\mathcal{S}]^2\frac{\theta^2}{2!} + [\mathcal{S}]^3\frac{\theta^3}{3!} + ...$
 
 
 # Forward Kinematics
@@ -33,24 +33,26 @@ Idea : One can combine consecutive transformations, $T_{01} T_{12} T_{23} = T_{0
 There exist two formulations of this formula; in the base frame and in the end-effector frame.
 
 In the base frame, we call this equation the _space form_ :
-$\cdot$ Suppose joint $n$ is displaced by to some joint value $\theta_n$. The end-effector frame $M$ then undergoes a displacement of the form $T = e^{\[\mathcal{S}_n\]\theta_n}M$, where $T \in SE(3)$ is the new configuration of the end-effector frame.
+$\cdot$ Suppose joint $n$ is displaced by to some joint value $\theta_n$. The end-effector frame $M$ then undergoes a displacement of the form $T = e^{[\mathcal{S}_n]\theta_n}M$, where $T \in SE(3)$ is the new configuration of the end-effector frame.
 
-$\cdot$ If we assume that the joint $n-1$ is also allowed to move, then the end-effector undergoes a displacement of the form $T = e^{\[\mathcal{S}_{n-1}\]\theta_{n-1}}(e^{\[\mathcal{S}_n\]\theta_n}M)$ 
+$\cdot$ If we assume that the joint $n-1$ is also allowed to move, then the end-effector undergoes a displacement of the form $T = e^{[\mathcal{S}_{n-1}]\theta_{n-1}}(e^{[\mathcal{S}_n]\theta_n}M)$ 
 
 $\cdot$ Continuing this reasonning and allowing all joints to move, it follows that 
-$ T(\theta) =  e^{\[\mathcal{S}_{1}\]\theta_{1}} ... e^{\[\mathcal{S}_{n-1}\]\theta_{n-1}} e^{\[\mathcal{S}_n\]\theta_n}M.$
+$ T(\theta) =  e^{[\mathcal{S}_{1}]\theta_{1}} ... e^{[\mathcal{S}_{n-1}]\theta_{n-1}} e^{[\mathcal{S}_n]\theta_n}M.$
 
 
 In the end-effector frame, this representation is called the _body form_:
 Using $e^{M^{-1}PM} = M^{-1}e^P M$, the above formula yields
-$$\begin{align}
-T(\theta)   &= e^{\[\mathcal{S}_{1}\]\theta_{1}} ... e^{\[\mathcal{S}_n\]\theta_n}M \\
-            &= e^{\[\mathcal{S}_{1}\]\theta_{1}} ... Me^{M^{-1}\[\mathcal{S}_n\]M\theta_n} \\
-            &= e^{\[\mathcal{S}_{1}\]\theta_{1}} ... Me^{M^{-1}\[\mathcal{S}_{n-1}\]M\theta_{n-1}} e^{M^{-1}\[\mathcal{S}_n\]M\theta_n}\\
-            &= M e^{M^{-1}\[\mathcal{S}_{1}\]M\theta_{1}} ... e^{M^{-1}\[\mathcal{S}_n\]M\theta_n}\\
-            &= M e^{\[\mathcal{B}_{1}\]\theta_{1}} ... e^{\[\mathcal{B}_{n}\]\theta_{n}}
-\end{align}$$
-where each $\[\mathcal{B}_i\] = \[Ad_{M^{-1}}\]\mathcal{S}_i$ represents the joint axes as screws axes in the end-effector frame.
+$$
+\begin{aligned}
+T(\theta)   &= e^{[\mathcal{S}_{1}]\theta_{1}} ... e^{[\mathcal{S}_n]\theta_n}M \\
+            &= e^{[\mathcal{S}_{1}]\theta_{1}} ... Me^{M^{-1}[\mathcal{S}_n]M\theta_n} \\
+            &= e^{[\mathcal{S}_{1}]\theta_{1}} ... Me^{M^{-1}[\mathcal{S}_{n-1}]M\theta_{n-1}} e^{M^{-1}[\mathcal{S}_n]M\theta_n}\\
+            &= M e^{M^{-1}[\mathcal{S}_{1}]M\theta_{1}} ... e^{M^{-1}[\mathcal{S}_n]M\theta_n}\\
+            &= M e^{[\mathcal{B}_{1}]\theta_{1}} ... e^{[\mathcal{B}_{n}]\theta_{n}}
+\end{aligned}
+$$
+where each $[\mathcal{B}_i] = [Ad_{M^{-1}}]\mathcal{S}_i$ represents the joint axes as screws axes in the end-effector frame.
 
 
 
