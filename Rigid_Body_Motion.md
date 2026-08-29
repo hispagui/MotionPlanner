@@ -19,14 +19,15 @@ $\cdot$ We will denote the _skew-symmetric matrix_ associated with $\omega\in\ma
 
 In the following we will use the exponential coordinate representation : 
 
-$$
-\operatorname{exp} :  [\mathcal{S}]\theta \longrightarrow T \in SE(3)
-$$
+```math
+\exp :  [\mathcal{S}]\theta \longrightarrow T \in SE(3)
+```
 
-$$\operatorname{log} : T \longrightarrow [\mathcal{S}]\theta \in se(3).
-$$
+```math
+\log : T \longrightarrow [\mathcal{S}]\theta \in se(3).
+```
 
-And we have $\operatorname{exp}([\mathcal{S}]\theta) = e^{[\mathcal{S}]\theta} = I + [\mathcal{S}]\theta + [\mathcal{S}]^2\frac{\theta^2}{2!} + [\mathcal{S}]^3\frac{\theta^3}{3!} + ...$
+And we have $\exp([\mathcal{S}]\theta) = e^{[\mathcal{S}]\theta} = I + [\mathcal{S}]\theta + [\mathcal{S}]^2\frac{\theta^2}{2!} + [\mathcal{S}]^3\frac{\theta^3}{3!} + ...$
 
 
 # Forward Kinematics
@@ -48,7 +49,7 @@ $ T(\theta) =  e^{[\mathcal{S}_{1}]\theta_{1}} ... e^{[\mathcal{S}_{n-1}]\theta_
 
 In the end-effector frame, this representation is called the _body form_:
 Using $e^{M^{-1}PM} = M^{-1}e^P M$, the above formula yields
-$$
+```math
 \begin{aligned}
 T(\theta)
     &= e^{[\mathcal{S}_{1}]\theta_{1}} ... e^{[\mathcal{S}_n]\theta_n}M \\
@@ -57,7 +58,8 @@ T(\theta)
     &= M e^{M^{-1}[\mathcal{S}_{1}]M\theta_{1}} ... e^{M^{-1}[\mathcal{S}_n]M\theta_n}\\
     &= M e^{[\mathcal{B}_{1}]\theta_{1}} ... e^{[\mathcal{B}_{n}]\theta_{n}}
 \end{aligned}
-$$
+```
+
 where each $[\mathcal{B}_i] = [Ad_{M^{-1}}]\mathcal{S}_i$ represents the joint axes as screws axes in the end-effector frame.
 
 
