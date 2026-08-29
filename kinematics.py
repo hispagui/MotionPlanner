@@ -3,6 +3,7 @@ kinameatics.py : 6-DOF manipulator
     class Manipulator keeps track of screws, whereeach screw is a pose in SE(3)
     Forward Kinematics (from angle of each joint, determines the end effector pose)
     Inverse Kinematics (from end effector pose, determines angle of each joint)
+    Computes a few Jacobians and checks for validity
 """
 
 
@@ -27,7 +28,10 @@ class Manipulator :
             raise ValueError("home pose must be a 4x4 matrix (in se3)")
         self.dof = len(self.screws)
         self.name = name
+        self.joint_limits = (None if joint_limits is None
+                             else np.asarray(joint_limits, float).reshape(-1,2)) # possibility to define restriction on joint angles for more realistic results
         self.draw_points = draw_points
+
 
     @classmethod
     def from_revolute(cls, axes_and_points : np.ndarray, home, **kwargs) -> "Manipulator":
@@ -131,6 +135,7 @@ class Manipulator :
     # ---------------------------------------------------------------
     # analytic inverse kinematics
     def _wrap(self, a : float) -> float:
+        # wrap to [-pi, pi]
         return (a + np.pi) % (2 * np.pi) - np.pi
 
     def _wrist_zyx(self, Rw :np.ndarray) -> list:
@@ -194,17 +199,38 @@ class Manipulator :
                     solutions.append(np.array([theta_1, theta_2, theta_3, 
                                                theta_4, theta_5, theta_6]))
         return solutions
-
-
-
-
-
-
     
-    # numerical inverse kinematics
-    def numerical_ik(self, T : np.ndarray) -> list:
-        
-        pass
+    # numerical inverse kinematics ----------------------------------------------
+
+    def numerical_ik(self, T : np.ndarray, theta_init=None, max_iter=200,
+                    eps_omega=1e-6, eps_v=1e-6, max_step=0.5, seed=0) -> list:
+        # uses Newton-Raphson method for nonlinear root-finding (check 6.2.2)
+        # follows step by step the algo for end-effector configuration in SE(3)
+        T = np.asarray(T, float)
+        if theta_init is None:
+            theta = np.random.default_rng(seed).uniform(-np.pi, np.pi, self.dof)
+        else:
+            theta = self._theta(theta_init).astype(float).copy()
+
+        for _ in range(max_iter):
+            Vb = se3.log(se3.inverse(self.fk(theta)) @ T) # find body twist
+            if np.linalg.norm(Vb[:3]) < eps_omega and np.linalg.norm(Vb[3:]) < eps_v: # while norms > epsilons
+                return self._finish_ik(theta), True
+
+            theta_next = np.linalg.pinv(self.body_jacobian(theta)) @ Vb # Moore-Pensrose psudo-inverse
+            step = np.linalg.norm(theta_next)
+            if step > max_step: # scalling 
+                theta_next *= max_step/step
+            theta = theta + theta_next
+        return self._finish_ik(theta), False # maxed out iterations, probably not accurate
+
+
+    def _finish_ik(self, theta : np.ndarray) -> np.ndarray:
+        # check if joint angles are possible regarding joint_limits
+        theta = self._wrap(theta)
+        if self.joint_limits is not None:
+            theta = np.clip(theta, self.joint_limits[:,0], self.joint_limits[:,1])
+        return theta
 
 
 
@@ -223,7 +249,6 @@ class Manipulator :
         traj_pts = [se3.screw_interpolate(Ta, Tb, t) for t in np.linspace(0, 1, n)]
         return traj_pts
     
-
 
 
 
@@ -279,16 +304,15 @@ if __name__ == "__main__":
     rng2 = np.random.default_rng(7)
     reached = 0
     trials = 50
-    '''
+
     for _ in range(trials):
         T_goal = arm.fk(rng2.uniform(-np.pi, np.pi, 6))
         for attempt in range(6):                       # a few random restarts
-            th_sol, ok = arm.ik(T_goal, seed=attempt)
+            th_sol, ok = arm.numerical_ik(T_goal, seed=attempt)
             if ok:
                 break
         if ok and se3.geodesic_distance(arm.fk(th_sol), T_goal) < 1e-4:
             reached += 1
     print(f"inverse kinematics reached {reached}/{trials} random poses")
-    '''
     print("\nkinematics.py: all checks passed "
           "(so3/se3 validated on the 6-DOF chain).")

@@ -58,12 +58,29 @@ where each $\[\mathcal{B}_i\] = \[Ad_{M^{-1}}\]\mathcal{S}_i$ represents the joi
 
 
 
-
-
 # Inverse Kinematics
-
+Given the end-effector's pose $X \in SE(3)$, what are the valid joints angles that such that $T(\theta) = X$.
 ## Analytic Inverse Kinematics
+For the famous PUMA 6R arm (see _Modern Robotics_, 6.1.1)
+
+[...]
 
 ## Numerical Inverse Kinematics
+Understand Newton-Raphson method; 
+make an initial guess, tweak the guess through iterations and get closer to actual solution.
+The tweaking makes use of the (pseudo-)inverse of the Jacobian (so we have to assume that our fk is differentiable)
 
-# Jacobians
+[...]
+
+see _Modern Robotics_, 6.2.2
+
+## Jacobians
+We want to find the twist $V \in se(3)$ of the end-effector.
+We obtain the joint velocities from joint positions.
+And the twist is obtained through the Jacobian; $V_{ee} = J(q)\dot{q}$ for $q$ the coordinates of the joints.
+
+[...]
+
+see _Modern Robotics_ chapter 5
+
+
