@@ -43,13 +43,13 @@ $ T(\theta) =  e^{\[\mathcal{S}_{1}\]\theta_{1}} ... e^{\[\mathcal{S}_{n-1}\]\th
 
 In the end-effector frame, this representation is called the _body form_:
 Using $e^{M^{-1}PM} = M^{-1}e^P M$, the above formula yields
-$$\begin{aligned}
+$$\begin{align}
 T(\theta)   &= e^{\[\mathcal{S}_{1}\]\theta_{1}} ... e^{\[\mathcal{S}_n\]\theta_n}M \\
             &= e^{\[\mathcal{S}_{1}\]\theta_{1}} ... Me^{M^{-1}\[\mathcal{S}_n\]M\theta_n} \\
             &= e^{\[\mathcal{S}_{1}\]\theta_{1}} ... Me^{M^{-1}\[\mathcal{S}_{n-1}\]M\theta_{n-1}} e^{M^{-1}\[\mathcal{S}_n\]M\theta_n}\\
             &= M e^{M^{-1}\[\mathcal{S}_{1}\]M\theta_{1}} ... e^{M^{-1}\[\mathcal{S}_n\]M\theta_n}\\
             &= M e^{\[\mathcal{B}_{1}\]\theta_{1}} ... e^{\[\mathcal{B}_{n}\]\theta_{n}}
-\end{aligned}$$
+\end{align}$$
 where each $\[\mathcal{B}_i\] = \[Ad_{M^{-1}}\]\mathcal{S}_i$ represents the joint axes as screws axes in the end-effector frame.
 
 
