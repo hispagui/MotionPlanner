@@ -1,4 +1,3 @@
-# The theory
 
 Lie Groups and Differential Geomtry
 
